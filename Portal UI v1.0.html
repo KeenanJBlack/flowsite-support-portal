@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowSite Tech Support Request Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for better scrolling */
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem; /* Add margin for scrollability */
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #4b5563;
+            transition: border-color 0.2s;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+        .radio-group label,
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            color: #4b5563;
+        }
+        .radio-group input[type="radio"],
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 0.5rem;
+            accent-color: #2563eb;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.75rem;
+        }
+        .sub-section {
+            border-left: 4px solid #d1d5db;
+            padding-left: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn-submit {
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+        .btn-submit:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+        .message-box {
+            background-color: #ecfdf5;
+            border: 1px solid #059669;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .disclaimer {
+            background-color: #fffbeb;
+            border: 1px solid #f59e0b;
+            color: #b45309;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">FlowSite Tech Support Request Portal</h1>
+
+        <form id="supportRequestForm" class="space-y-6">
+            <!-- Contact Information -->
+            <div class="section-title">Contact Information</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="form-group">
+                    <label for="name">Name <span class="text-red-500">*</span></label>
+                    <input type="text" id="name" name="name" required class="rounded-lg">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email <span class="text-red-500">*</span></label>
+                    <input type="email" id="email" name="email" required class="rounded-lg">
+                </div>
+                <div class="form-group">
+                    <label for="company">Company <span class="text-red-500">*</span></label>
+                    <input type="text" id="company" name="company" required class="rounded-lg">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number (optional)</label>
+                    <input type="tel" id="phone" name="phone" class="rounded-lg">
+                </div>
+            </div>
+
+            <!-- Urgency -->
+            <div class="section-title">Urgency</div>
+            <div class="radio-group flex flex-col md:flex-row md:space-x-8 space-y-2 md:space-y-0">
+                <label>
+                    <input type="radio" name="urgency" value="Low" required class="rounded-full">
+                    Low<br>(est. 1 week response time)
+                </label>
+                <label>
+                    <input type="radio" name="urgency" value="Medium" class="rounded-full">
+                    Medium<br>(est. 2-3 days response time)
+                </label>
+                <label>
+                    <input type="radio" name="urgency" value="High" class="rounded-full">
+                    High<br>(est. 1 day response time)
+                </label>
+                <label>
+                    <input type="radio" name="urgency" value="On-Site" class="rounded-full">
+                    On-Site<br>(Immediate response time)
+                </label>
+            </div>
+
+            <!-- Topic -->
+            <div class="section-title">Topic</div>
+            <div class="radio-group space-y-2">
+                <label>
+                    <input type="radio" name="topic" value="Onsite Troubleshooting" required class="rounded-full">
+                    Onsite Troubleshooting
+                </label>
+                <label>
+                    <input type="radio" name="topic" value="FlowSite Requests" class="rounded-full">
+                    FlowSite Requests
+                </label>
+                <label>
+                    <input type="radio" name="topic" value="Other" class="rounded-full">
+                    Other (specify in 'Description of Request')
+                </label>
+            </div>
+
+            <!-- Conditional Sections based on Topic -->
+            <!-- Onsite Troubleshooting Section -->
+            <div id="onsiteTroubleshootingSection" class="sub-section hidden">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">Onsite Troubleshooting Details</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="form-group">
+                        <label for="onsiteLocation">Location Name</label>
+                        <input type="text" id="onsiteLocation" name="onsiteLocation" class="rounded-lg">
+                    </div>
+                    <div class="form-group">
+                        <label for="onsiteSeries">Series</label>
+                        <input type="text" id="onsiteSeries" name="onsiteSeries" class="rounded-lg">
+                    </div>
+                    <div class="form-group">
+                        <label for="onsiteSerialNumber">Serial Number</label>
+                        <input type="text" id="onsiteSerialNumber" name="onsiteSerialNumber" class="rounded-lg">
+                    </div>
+                    <div class="form-group">
+                        <label for="onsiteSoftwareVersion">Software Version</label>
+                        <input type="text" id="onsiteSoftwareVersion" name="onsiteSoftwareVersion" class="rounded-lg">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="mb-2">Select All Active Alarm (if any active)</label>
+                    <div class="checkbox-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                        <label><input type="checkbox" name="activeAlarms" value="Pump Fail"> Pump Fail</label>
+                        <label><input type="checkbox" name="activeAlarms" value="Valve Leak"> Valve Leak</label>
+                        <label><input type="checkbox" name="activeAlarms" value="High/Low Pressure"> High/Low Pressure</label>
+                        <label><input type="checkbox" name="activeAlarms" value="Stack Overflow"> Stack Overflow</label>
+                        <label><input type="checkbox" name="activeAlarms" value="Stack Empty or Line Blocked"> Stack Empty or Line Blocked</label>
+                        <label><input type="checkbox" name="activeAlarms" value="High Deviation"> High Deviation</label>
+                        <label><input type="checkbox" name="activeAlarms" value="Low Tank"> Low Tank</label>
+                        <label><input type="checkbox" name="activeAlarms" value="Pressure Transducer Fail / Malfunction"> Pressure Transducer Fail / Malfunction</label>
+                        <label><input type="checkbox" name="activeAlarms" value="Emergency Shutdown"> Emergency Shutdown</label>
+                        <label><input type="checkbox" name="activeAlarms" value="OtherAlarm"> Other (specify below)</label>
+                    </div>
+                    <textarea id="otherAlarmDescription" name="otherAlarmDescription" rows="2" placeholder="Specify other active alarms..." class="mt-2 hidden rounded-lg"></textarea>
+                </div>
+            </div>
+
+            <!-- FlowSite Requests Section -->
+            <div id="flowsiteRequestsSection" class="sub-section hidden">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">FlowSite Requests Details</h3>
+                <div class="radio-group space-y-2 mb-6">
+                    <label>
+                        <input type="radio" name="flowsiteRequestType" value="Diagnostics Assistance" class="rounded-full">
+                        Diagnostics Assistance
+                    </label>
+                    <label>
+                        <input type="radio" name="flowsiteRequestType" value="AddNewUser" class="rounded-full">
+                        Add New User to FlowSite
+                    </label>
+                    <label>
+                        <input type="radio" name="flowsiteRequestType" value="AddSystemExistingUser" class="rounded-full">
+                        Add System for Existing User
+                    </label>
+                    <label>
+                        <input type="radio" name="flowsiteRequestType" value="OtherFlowsiteRequest" class="rounded-full">
+                        Other (specify below)
+                    </label>
+                </div>
+
+                <!-- Diagnostics Assistance Sub-section -->
+                <div id="diagnosticsAssistanceSection" class="sub-section hidden">
+                    <h4 class="text-lg font-medium text-gray-600 mb-3">Diagnostics Assistance Details</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label for="diagLocation">Location Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="diagLocation" name="diagLocation" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="diagSeries">Series <span class="text-red-500">*</span></label>
+                            <input type="text" id="diagSeries" name="diagSeries" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="diagSerialNumber">Serial Number <span class="text-red-500">*</span></label>
+                            <input type="text" id="diagSerialNumber" name="diagSerialNumber" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="diagSoftwareVersion">Software Version <span class="text-red-500">*</span></label>
+                            <input type="text" id="diagSoftwareVersion" name="diagSoftwareVersion" class="rounded-lg">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add New User Sub-section -->
+                <div id="addNewUserSection" class="sub-section hidden">
+                    <h4 class="text-lg font-medium text-gray-600 mb-3">New User Contact Information (if different than above)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                        <div class="form-group">
+                            <label for="newUserName">New User Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="newUserName" name="newUserName" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserEmail">New User Email <span class="text-red-500">*</span></label>
+                            <input type="email" id="newUserEmail" name="newUserEmail" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserCompany">New User Company <span class="text-red-500">*</span></label>
+                            <input type="text" id="newUserCompany" name="newUserCompany" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserPhone">New User Phone Number (optional)</label>
+                            <input type="tel" id="newUserPhone" name="newUserPhone" class="rounded-lg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newUserSerialNumbers">List of Serial Numbers for New User to Gain Access <span class="text-red-500">*</span></label>
+                        <textarea id="newUserSerialNumbers" name="newUserSerialNumbers" rows="3" placeholder="Enter serial numbers, one per line or comma-separated" class="rounded-lg"></textarea>
+                    </div>
+                </div>
+
+                <!-- Add System for Existing User Sub-section -->
+                <div id="addSystemExistingUserSection" class="sub-section hidden">
+                    <h4 class="text-lg font-medium text-gray-600 mb-3">Existing User Contact Information (if different than above)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                        <div class="form-group">
+                            <label for="existingUserName">Existing User Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="existingUserName" name="existingUserName" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="existingUserEmail">Existing User Email <span class="text-red-500">*</span></label>
+                            <input type="email" id="existingUserEmail" name="existingUserEmail" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="existingUserCompany">Existing User Company <span class="text-red-500">*</span></label>
+                            <input type="text" id="existingUserCompany" name="existingUserCompany" class="rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="existingUserPhone">Existing User Phone Number (optional)</label>
+                            <input type="tel" id="existingUserPhone" name="existingUserPhone" class="rounded-lg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="existingUserSerialNumbers">List of Serial Numbers for Existing User to Gain Access <span class="text-red-500">*</span></label>
+                        <textarea id="existingUserSerialNumbers" name="existingUserSerialNumbers" rows="3" placeholder="Enter serial numbers, one per line or comma-separated" class="rounded-lg"></textarea>
+                    </div>
+                </div>
+
+                <!-- Other FlowSite Request Description -->
+                <div id="otherFlowsiteRequestDescriptionSection" class="sub-section hidden">
+                    <h4 class="text-lg font-medium text-gray-600 mb-3">Other FlowSite Request</h4>
+                    <div class="form-group">
+                        <label for="otherFlowsiteRequest">Description of Other FlowSite Request <span class="text-red-500">*</span></label>
+                        <textarea id="otherFlowsiteRequest" name="otherFlowsiteRequest" rows="3" placeholder="Please describe your FlowSite request in detail." class="rounded-lg"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description of Request -->
+            <div class="section-title">Description of Request</div>
+            <div class="form-group">
+                <label for="description">Description of Request <span class="text-red-500">*</span></label>
+                <textarea id="description" name="description" rows="6" required placeholder="Please provide a detailed description of your request." class="rounded-lg"></textarea>
+            </div>
+
+            <div class="flex justify-center mt-8">
+                <button type="submit" class="btn-submit">Submit Request</button>
+            </div>
+        </form>
+
+        <!-- Message Box for Confirmation -->
+        <div id="messageBox" class="message-box hidden"></div>
+
+        <!-- Disclaimer about Backend -->
+        <div class="disclaimer">
+            <strong>Note:</strong> This is a front-end UI. To enable actual email sending, a backend server is required. This current implementation sends data to a Flask backend (if configured) which then simulates sending an email to your support team.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('supportRequestForm');
+            const messageBox = document.getElementById('messageBox');
+
+            // Define your Flask backend URL
+            // IMPORTANT: Replace 'yourusername.pythonanywhere.com' with your actual PythonAnywhere web app domain.
+            const BACKEND_URL = 'http://127.0.0.1:5000/submit-request';
+
+            // Topic radio buttons and sections
+            const topicRadios = document.querySelectorAll('input[name="topic"]');
+            const onsiteTroubleshootingSection = document.getElementById('onsiteTroubleshootingSection');
+            const flowsiteRequestsSection = document.getElementById('flowsiteRequestsSection');
+            const otherTopicRadio = document.querySelector('input[name="topic"][value="Other"]');
+
+            // Onsite Troubleshooting specific inputs
+            const onsiteRequiredInputs = [
+                document.getElementById('onsiteLocation'),
+                document.getElementById('onsiteSeries'),
+                document.getElementById('onsiteSerialNumber'),
+                document.getElementById('onsiteSoftwareVersion')
+            ];
+            const otherAlarmCheckbox = document.querySelector('input[name="activeAlarms"][value="OtherAlarm"]');
+            const otherAlarmDescription = document.getElementById('otherAlarmDescription');
+
+            // FlowSite Request Type radio buttons and sections
+            const flowsiteRequestTypeRadios = document.querySelectorAll('input[name="flowsiteRequestType"]');
+            const diagnosticsAssistanceSection = document.getElementById('diagnosticsAssistanceSection');
+            const addNewUserSection = document.getElementById('addNewUserSection');
+            const addSystemExistingUserSection = document.getElementById('addSystemExistingUserSection');
+            const otherFlowsiteRequestDescriptionSection = document.getElementById('otherFlowsiteRequestDescriptionSection');
+
+            // Diagnostics Assistance specific inputs
+            const diagRequiredInputs = [
+                document.getElementById('diagLocation'),
+                document.getElementById('diagSeries'),
+                document.getElementById('diagSerialNumber'),
+                document.getElementById('diagSoftwareVersion')
+            ];
+
+            // Add New User specific inputs
+            const newUserRequiredInputs = [
+                document.getElementById('newUserName'),
+                document.getElementById('newUserEmail'),
+                document.getElementById('newUserCompany'),
+                document.getElementById('newUserSerialNumbers')
+            ];
+
+            // Add System for Existing User specific inputs
+            const existingUserRequiredInputs = [
+                document.getElementById('existingUserName'),
+                document.getElementById('existingUserEmail'),
+                document.getElementById('existingUserCompany'),
+                document.getElementById('existingUserSerialNumbers')
+            ];
+
+            // Other FlowSite Request specific inputs
+            const otherFlowsiteRequestInput = document.getElementById('otherFlowsiteRequest');
+
+            // Function to set required attribute for inputs
+            function setRequired(inputs, isRequired) {
+                inputs.forEach(input => {
+                    const label = input.closest('.form-group').querySelector('label');
+                    // Remove any existing asterisks (both plain text and HTML)
+                    label.innerHTML = label.innerHTML.replace(/<span class="text-red-500">\*<\/span>/g, '').replace(/\s*\*$/, '');
+                    if (isRequired) {
+                        // Add the red asterisk if required
+                        label.innerHTML += ' <span class="text-red-500">*</span>';
+                    }
+                });
+            }
+
+            // Event listener for Topic radio buttons
+            topicRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    // Hide all conditional sections and reset required attributes
+                    onsiteTroubleshootingSection.classList.add('hidden');
+                    flowsiteRequestsSection.classList.add('hidden');
+                    setRequired(onsiteRequiredInputs, false);
+                    setRequired(diagRequiredInputs, false);
+                    setRequired(newUserRequiredInputs, false);
+                    setRequired(existingUserRequiredInputs, false);
+                    otherFlowsiteRequestInput.required = false;
+                    // Ensure 'Other' topic label also has its '*' removed if not selected
+                    if (otherFlowsiteRequestInput.closest('.form-group')) {
+                        otherFlowsiteRequestInput.closest('.form-group').querySelector('label').innerHTML = otherFlowsiteRequestInput.closest('.form-group').querySelector('label').textContent.replace(' <span class="text-red-500">*</span>', '');
+                    }
+
+
+                    // Hide all FlowSite sub-sections
+                    diagnosticsAssistanceSection.classList.add('hidden');
+                    addNewUserSection.classList.add('hidden');
+                    addSystemExistingUserSection.classList.add('hidden');
+                    otherFlowsiteRequestDescriptionSection.classList.add('hidden');
+                    flowsiteRequestTypeRadios.forEach(r => r.checked = false); // Uncheck FlowSite sub-topic radios
+
+                    if (radio.value === 'Onsite Troubleshooting') {
+                        onsiteTroubleshootingSection.classList.remove('hidden');
+                        setRequired(onsiteRequiredInputs, true);
+                    } else if (radio.value === 'FlowSite Requests') {
+                        flowsiteRequestsSection.classList.remove('hidden');
+                    }
+                });
+            });
+
+            // Event listener for Other Alarm checkbox
+            otherAlarmCheckbox.addEventListener('change', () => {
+                if (otherAlarmCheckbox.checked) {
+                    otherAlarmDescription.classList.remove('hidden');
+                    otherAlarmDescription.required = true;
+                } else {
+                    otherAlarmDescription.classList.add('hidden');
+                    otherAlarmDescription.required = false;
+                    otherAlarmDescription.value = ''; // Clear content when hidden
+                }
+            });
+
+
+            // Event listener for FlowSite Request Type radio buttons
+            flowsiteRequestTypeRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    // Hide all FlowSite sub-sections and reset required attributes
+                    diagnosticsAssistanceSection.classList.add('hidden');
+                    addNewUserSection.classList.add('hidden');
+                    addSystemExistingUserSection.classList.add('hidden');
+                    otherFlowsiteRequestDescriptionSection.classList.add('hidden');
+                    setRequired(diagRequiredInputs, false);
+                    setRequired(newUserRequiredInputs, false);
+                    setRequired(existingUserRequiredInputs, false);
+                    otherFlowsiteRequestInput.required = false;
+                    // Ensure 'Other' flowsite request label also has its '*' removed if not selected
+                    if (otherFlowsiteRequestInput.closest('.form-group')) {
+                        otherFlowsiteRequestInput.closest('.form-group').querySelector('label').innerHTML = otherFlowsiteRequestInput.closest('.form-group').querySelector('label').textContent.replace(' <span class="text-red-500">*</span>', '');
+                    }
+
+
+                    if (radio.value === 'Diagnostics Assistance') {
+                        diagnosticsAssistanceSection.classList.remove('hidden');
+                        setRequired(diagRequiredInputs, true);
+                    } else if (radio.value === 'AddNewUser') {
+                        addNewUserSection.classList.remove('hidden');
+                        setRequired(newUserRequiredInputs, true);
+                    } else if (radio.value === 'AddSystemExistingUser') {
+                        addSystemExistingUserSection.classList.remove('hidden');
+                        setRequired(existingUserRequiredInputs, true);
+                    } else if (radio.value === 'OtherFlowsiteRequest') {
+                        otherFlowsiteRequestDescriptionSection.classList.remove('hidden');
+                        otherFlowsiteRequestInput.required = true;
+                        if (otherFlowsiteRequestInput.closest('.form-group')) {
+                            otherFlowsiteRequestInput.closest('.form-group').querySelector('label').innerHTML += ' <span class="text-red-500">*</span>';
+                        }
+                    }
+                });
+            });
+
+            // Form submission handler
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                // Basic client-side validation for required fields
+                let isValid = true;
+                const requiredInputs = form.querySelectorAll('[required]:not(.hidden)');
+                requiredInputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.style.borderColor = 'red';
+                    } else {
+                        input.style.borderColor = '#d1d5db';
+                    }
+                });
+
+                // Check for selected radio buttons in topic and urgency
+                const urgencySelected = document.querySelector('input[name="urgency"]:checked');
+                const topicSelected = document.querySelector('input[name="topic"]:checked');
+
+                if (!urgencySelected) {
+                    isValid = false;
+                    // You might want to add a visual cue for unselected radio groups
+                }
+                if (!topicSelected) {
+                    isValid = false;
+                    // You might want to add a visual cue for unselected radio groups
+                }
+
+                // If topic is FlowSite Requests, check if a sub-topic is selected
+                if (topicSelected && topicSelected.value === 'FlowSite Requests') {
+                    const flowsiteRequestTypeSelected = document.querySelector('input[name="flowsiteRequestType"]:checked');
+                    if (!flowsiteRequestTypeSelected) {
+                        isValid = false;
+                        // Visual cue for unselected FlowSite sub-topic
+                    }
+                }
+
+                if (!isValid) {
+                    messageBox.classList.remove('hidden');
+                    messageBox.classList.remove('bg-green-100', 'border-green-600', 'text-green-800');
+                    messageBox.classList.add('bg-red-100', 'border-red-600', 'text-red-800');
+                    messageBox.innerHTML = 'Please fill in all required fields.';
+                    return;
+                }
+
+                // Collect all form data
+                const formData = new FormData(form);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    // Handle checkboxes for activeAlarms
+                    if (key === 'activeAlarms') {
+                        if (!data[key]) {
+                            data[key] = [];
+                        }
+                        data[key].push(value);
+                    } else {
+                        data[key] = value;
+                    }
+                }
+
+                // Add values for unchecked/hidden fields if they are part of a group but not selected
+                // This ensures all possible fields are sent, even if empty, for consistent backend parsing
+                // Or, more efficiently, only include fields that are visible/relevant.
+                // For simplicity, we'll collect all named inputs and filter on backend.
+
+                // Specifically handle radio groups where only one value is picked
+                data.urgency = document.querySelector('input[name="urgency"]:checked')?.value || '';
+                data.topic = document.querySelector('input[name="topic"]:checked')?.value || '';
+                data.flowsiteRequestType = document.querySelector('input[name="flowsiteRequestType"]:checked')?.value || '';
+
+
+                // Add specific logic for checkboxes, as FormData only captures checked ones
+                const activeAlarmsChecked = Array.from(document.querySelectorAll('input[name="activeAlarms"]:checked')).map(cb => cb.value);
+                data.activeAlarms = activeAlarmsChecked;
+
+                // Ensure conditional textareas are included if visible
+                if (otherAlarmDescription.classList.contains('hidden')) {
+                    data.otherAlarmDescription = '';
+                }
+                if (otherFlowsiteRequestInput.classList.contains('hidden')) {
+                    data.otherFlowsiteRequest = '';
+                }
+
+
+                // Show a loading message
+                messageBox.classList.remove('hidden', 'bg-red-100', 'border-red-600', 'text-red-800', 'bg-green-100', 'border-green-600', 'text-green-800');
+                messageBox.classList.add('bg-blue-100', 'border-blue-600', 'text-blue-800');
+                messageBox.innerHTML = '<p>Submitting your request...</p>';
+
+
+                try {
+                    const response = await fetch(BACKEND_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data), // Send data as JSON
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        messageBox.classList.remove('bg-blue-100', 'border-blue-600', 'text-blue-800', 'bg-red-100', 'border-red-600', 'text-red-800');
+                        messageBox.classList.add('bg-green-100', 'border-green-600', 'text-green-800');
+                        messageBox.innerHTML = `<p>${result.message}</p>`; // Display success message from backend
+                        form.reset();
+                        // Hide all conditional sections after reset
+                        onsiteTroubleshootingSection.classList.add('hidden');
+                        flowsiteRequestsSection.classList.add('hidden');
+                        diagnosticsAssistanceSection.classList.add('hidden');
+                        addNewUserSection.classList.add('hidden');
+                        addSystemExistingUserSection.classList.add('hidden');
+                        otherFlowsiteRequestDescriptionSection.classList.add('hidden');
+                        otherAlarmDescription.classList.add('hidden');
+                        otherAlarmDescription.required = false;
+
+                        // Reset required attributes for all conditional inputs
+                        setRequired(onsiteRequiredInputs, false);
+                        setRequired(diagRequiredInputs, false);
+                        setRequired(newUserRequiredInputs, false);
+                        setRequired(existingUserRequiredInputs, false);
+                        otherFlowsiteRequestInput.required = false;
+                        if (otherFlowsiteRequestInput.closest('.form-group')) {
+                            otherFlowsiteRequestInput.closest('.form-group').querySelector('label').innerHTML = otherFlowsiteRequestInput.closest('.form-group').querySelector('label').textContent.replace(' <span class="text-red-500">*</span>', '');
+                        }
+
+                    } else {
+                        messageBox.classList.remove('bg-blue-100', 'border-blue-600', 'text-blue-800', 'bg-green-100', 'border-green-600', 'text-green-800');
+                        messageBox.classList.add('bg-red-100', 'border-red-600', 'text-red-800');
+                        messageBox.innerHTML = `<p>Error: ${result.message || 'Something went wrong.'}</p>`;
+                    }
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    messageBox.classList.remove('bg-blue-100', 'border-blue-600', 'text-blue-800', 'bg-green-100', 'border-green-600', 'text-green-800');
+                    messageBox.classList.add('bg-red-100', 'border-red-600', 'text-red-800');
+                    messageBox.innerHTML = '<p>Network error or server unavailable. Please try again later.</p>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
